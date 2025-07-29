@@ -15,6 +15,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   return (
     <div className={clsx('flex justify-center items-center', className)}>
       <div
+        data-testid="loading-spinner"
         className={clsx(
           'animate-spin rounded-full border-2 border-gray-300 border-t-blue-600',
           sizes[size]

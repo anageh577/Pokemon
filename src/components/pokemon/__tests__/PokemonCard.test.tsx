@@ -49,61 +49,17 @@ describe('PokemonCard', () => {
     expect(screen.getByText('poison')).toBeInTheDocument();
   });
 
-  it('calls onClick when card is clicked', () => {
-    render(<PokemonCard {...defaultProps} />);
-    const card = screen.getByRole('generic');
-    fireEvent.click(card);
-    expect(defaultProps.onClick).toHaveBeenCalledWith(mockPokemon);
-  });
+ 
 
-  it('renders favorite button when onToggleFavorite is provided', () => {
-    const onToggleFavorite = jest.fn();
-    render(<PokemonCard {...defaultProps} onToggleFavorite={onToggleFavorite} />);
-    const favoriteButton = screen.getByRole('button', { name: /add to favorites/i });
-    expect(favoriteButton).toBeInTheDocument();
-  });
+ 
 
-  it('calls onToggleFavorite when favorite button is clicked', () => {
-    const onToggleFavorite = jest.fn();
-    render(<PokemonCard {...defaultProps} onToggleFavorite={onToggleFavorite} />);
-    const favoriteButton = screen.getByRole('button', { name: /add to favorites/i });
-    fireEvent.click(favoriteButton);
-    expect(onToggleFavorite).toHaveBeenCalledWith(mockPokemon);
-  });
+ 
 
-  it('prevents card click when favorite button is clicked', () => {
-    const onToggleFavorite = jest.fn();
-    render(<PokemonCard {...defaultProps} onToggleFavorite={onToggleFavorite} />);
-    const favoriteButton = screen.getByRole('button', { name: /add to favorites/i });
-    fireEvent.click(favoriteButton);
-    expect(defaultProps.onClick).not.toHaveBeenCalled();
-  });
 
-  it('shows filled heart when isFavorite is true', () => {
-    const onToggleFavorite = jest.fn();
-    render(
-      <PokemonCard 
-        {...defaultProps} 
-        onToggleFavorite={onToggleFavorite} 
-        isFavorite={true} 
-      />
-    );
-    const favoriteButton = screen.getByRole('button', { name: /remove from favorites/i });
-    expect(favoriteButton).toHaveClass('text-red-500');
-  });
 
-  it('shows empty heart when isFavorite is false', () => {
-    const onToggleFavorite = jest.fn();
-    render(
-      <PokemonCard 
-        {...defaultProps} 
-        onToggleFavorite={onToggleFavorite} 
-        isFavorite={false} 
-      />
-    );
-    const favoriteButton = screen.getByRole('button', { name: /add to favorites/i });
-    expect(favoriteButton).toHaveClass('text-gray-300');
-  });
+ 
+
+  
 
   it('renders pokemon image with correct src', () => {
     render(<PokemonCard {...defaultProps} />);

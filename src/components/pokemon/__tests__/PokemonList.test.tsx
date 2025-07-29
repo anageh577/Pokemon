@@ -75,15 +75,15 @@ describe('PokemonList', () => {
 
   it('shows loading spinner when isLoading is true and no pokemon', () => {
     render(<PokemonList {...defaultProps} pokemon={[]} isLoading />);
-    const spinner = screen.getByRole('generic');
-    expect(spinner.firstChild).toHaveClass('animate-spin');
+    const spinner = screen.getByTestId('loading-spinner');
+    expect(spinner).toHaveClass('animate-spin');
   });
 
   it('shows error message when error is provided', () => {
     const error = 'Failed to load pokemon';
     render(<PokemonList {...defaultProps} error={error} />);
     expect(screen.getByText(/error loading pokemon/i)).toBeInTheDocument();
-    expect(screen.getByText(error)).toBeInTheDocument();
+    expect(screen.getByText(/failed to load pokemon/i)).toBeInTheDocument();
   });
 
   it('shows "No Pokemon found" when pokemon array is empty', () => {
@@ -107,7 +107,8 @@ describe('PokemonList', () => {
   it('shows loading state in load more button when isLoading is true', () => {
     render(<PokemonList {...defaultProps} hasNextPage onLoadMore={jest.fn()} isLoading />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
-    expect(screen.getByRole('generic')).toBeInTheDocument(); // Loading spinner
+    const loadMoreButton = screen.getByText('Loading...').closest('button');
+    expect(loadMoreButton).toBeDisabled();
   });
 
   it('disables load more button when isLoading is true', () => {
@@ -123,7 +124,7 @@ describe('PokemonList', () => {
 
   it('renders pokemon in a grid layout', () => {
     render(<PokemonList {...defaultProps} />);
-    const grid = screen.getByText('Bulbasaur').closest('div')?.parentElement;
+    const grid = screen.getByText('Bulbasaur').closest('div')?.parentElement?.parentElement;
     expect(grid).toHaveClass('grid');
   });
 }); 
