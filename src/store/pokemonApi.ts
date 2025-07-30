@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Pokemon, PokemonListResponse, PokemonDetailResponse, PaginationParams } from '../types/pokemon';
 
-const baseUrl =  'https://pokeapi.co/api/v2';
+const baseUrl = (import.meta as any).env?.VITE_POKEMON_API_BASE_URL;
+const defaultLimit = (import.meta as any).env?.REACT_APP_ITEMS_PER_PAGE;
 
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
@@ -16,7 +17,7 @@ export const pokemonApi = createApi({
   endpoints: (builder) => ({
     // Get paginated list of Pokemon
     getPokemonList: builder.query<PokemonListResponse, PaginationParams>({
-      query: ({ limit = 20, offset = 0 } = {}) => ({
+      query: ({ limit = defaultLimit, offset = 0 } = {}) => ({
         url: '/pokemon',
         params: { limit, offset },
       }),
