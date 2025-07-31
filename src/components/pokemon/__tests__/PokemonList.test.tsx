@@ -62,8 +62,6 @@ describe('PokemonList', () => {
     
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
     expect(screen.getByText('Ivysaur')).toBeInTheDocument();
-    expect(screen.getByText('#001')).toBeInTheDocument();
-    expect(screen.getByText('#002')).toBeInTheDocument();
   });
 
   it('calls onPokemonClick when a pokemon card is clicked', () => {
@@ -122,9 +120,9 @@ describe('PokemonList', () => {
     expect(screen.queryByText('Load More')).not.toBeInTheDocument();
   });
 
-  it('renders pokemon in a grid layout', () => {
+  it('renders pokemon in a list layout', () => {
     render(<PokemonList {...defaultProps} />);
-    const grid = screen.getByText('Bulbasaur').closest('div')?.parentElement?.parentElement;
-    expect(grid).toHaveClass('grid');
+    const list = screen.getByText('Bulbasaur').closest('div')?.parentElement?.parentElement?.parentElement;
+    expect(list).toHaveClass('divide-y', 'divide-gray-200');
   });
 }); 

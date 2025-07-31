@@ -44,7 +44,6 @@ describe('PokemonCard', () => {
     render(<PokemonCard {...defaultProps} />);
     
     expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
-    expect(screen.getByText('#001')).toBeInTheDocument();
     expect(screen.getByText('grass')).toBeInTheDocument();
     expect(screen.getByText('poison')).toBeInTheDocument();
   });
