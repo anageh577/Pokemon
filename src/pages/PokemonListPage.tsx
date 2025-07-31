@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetPokemonListQuery } from '../store/pokemonApi';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
@@ -15,6 +15,11 @@ const PokemonListPage: React.FC = () => {
   const { currentPage, itemsPerPage } = useAppSelector((state) => state.ui);
 
   const [searchInput, setSearchInput] = useState(searchTerm);
+
+  // Set page title
+  useEffect(() => {
+    document.title = 'PokeReact';
+  }, []);
 
   const { data: pokemonList, isLoading, error } = useGetPokemonListQuery({
     limit: itemsPerPage,
@@ -87,7 +92,7 @@ const PokemonListPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-[500px] mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Pokemon Explorer

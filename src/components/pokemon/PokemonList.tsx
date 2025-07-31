@@ -1,6 +1,5 @@
 import React from 'react';
 import type { PokemonListProps } from '../../types/pokemon';
-import PokemonCard from './PokemonCard';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Button from '../common/Button';
 
@@ -41,15 +40,44 @@ const PokemonList: React.FC<PokemonListProps> = ({
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <ul className="divide-y divide-gray-200">
         {pokemon.map((p) => (
-          <PokemonCard
-            key={p.id}
-            pokemon={p}
-            onClick={onPokemonClick}
-          />
+          <li key={p.id} className="py-4">
+            <div 
+              className="flex items-center justify-between space-x-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"
+              onClick={() => onPokemonClick(p)}
+            >
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.id}.png`}
+                alt={p.name}
+                className="w-16 h-16 object-contain"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/placeholder-pokemon.png';
+                }}
+              />
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+                </h3>
+                {p.types && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {p.types.map((type) => (
+                      <span
+                        key={type.type.name}
+                        className="px-2 py-1 rounded-full text-xs font-medium text-white bg-gray-400"
+                      >
+                        {type.type.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {hasNextPage && onLoadMore && (
         <div className="flex justify-center">

@@ -1,7 +1,5 @@
-import React from 'react';
-import clsx from 'clsx';
+import React, { useEffect } from 'react';
 import type { PokemonDetailProps } from '../../types/pokemon';
-import Card from '../common/Card';
 import Button from '../common/Button';
 import LoadingSpinner from '../common/LoadingSpinner';
 
@@ -10,9 +8,17 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({
   isLoading = false,
   error = null,
   onBack,
-  onToggleFavorite,
-  isFavorite = false,
 }) => {
+  // Update page title when Pokemon data is available
+  useEffect(() => {
+    if (pokemon && pokemon.name) {
+      const capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+      document.title = `${capitalizedName}`;
+    } else {
+      document.title = 'Pokémon App';
+    }
+  }, [pokemon]);
+
   if (isLoading) {
     return (
       <div className="flex justify-center py-12">
@@ -59,7 +65,7 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100">
     {/* Sticky Header */}
     <div className="sticky top-0 z-20 bg-white/70 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-      <div className="max-w-4xl mx-auto px-4 py-4 flex items-center">
+      <div className="mx-auto px-4 py-4 flex items-center">
         <button
           onClick={onBack}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 hover:text-gray-900 transition-all duration-200"
@@ -85,12 +91,9 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({
     {/* Content */}
     <div className="pt-4">
     <div className="py-10 px-4 bg-gradient-to-b from-white via-slate-50 to-slate-100 min-h-screen">
-      <div className="max-w-5xl mx-auto bg-white shadow-2xl rounded-3xl p-6 md:p-10">
-        {/* Header */}
+      <div className="max-w-4xl mx-auto rounded-3xl p-6 md:p-10 w-[500px]">
+        {/* Header with Image */}
         <div className="flex flex-col items-center gap-6 mb-10">
-          <h2 className="text-5xl font-extrabold text-slate-800 capitalize drop-shadow-sm">
-            {pokemon.name}
-          </h2>
           <img
             src={
               pokemon.sprites?.other?.['official-artwork']?.front_default ??
@@ -101,34 +104,40 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({
           />
         </div>
 
-        {/* Content */}
-        <div className="grid  gap-10">
-          {/* Details Section */}
-          <div className="bg-slate-50 rounded-2xl p-6 shadow-inner">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Pokémon Info</h3>
-            <ul className="space-y-3 text-gray-700">
-              <li>
-                <strong>Height:</strong> {pokemon.height ? pokemon.height / 10 : 'N/A'} m
-              </li>
-              <li>
-                <strong>Weight:</strong> {pokemon.weight ? pokemon.weight / 10 : 'N/A'} kg
-              </li>
-              <li>
-                <strong>Types:</strong>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {pokemon.types?.map(({ type }) => (
-                    <span
-                      key={type.name}
-                      className="px-3 py-1 text-sm rounded-full bg-gradient-to-br from-indigo-100 to-indigo-300 text-indigo-800 font-medium shadow-sm capitalize"
-                    >
-                      {type.name}
-                    </span>
-                  ))}
-                </div>
-              </li>
-            </ul>
+        {/* Details Section */}
+        <div className="space-y-0">
+          {/* Name */}
+          <div className="flex items-center py-4 border-b border-gray-200 justify-between">
+            <span className="text-lg font-semibold text-gray-700 w-24">Name</span>
+            <span className="text-lg text-gray-900 capitalize">{pokemon.name}</span>
           </div>
-       
+          
+          {/* Height */}
+          <div className="flex items-center py-4 border-b border-gray-200 justify-between">
+            <span className="text-lg font-semibold text-gray-700 w-24">Height</span>
+            <span className="text-lg text-gray-900">{pokemon.height ? pokemon.height / 10 : 'N/A'} m</span>
+          </div>
+          
+          {/* Weight */}
+          <div className="flex items-center py-4 border-b border-gray-200 justify-between">
+            <span className="text-lg font-semibold text-gray-700 w-24">Weight</span>
+            <span className="text-lg text-gray-900">{pokemon.weight ? pokemon.weight / 10 : 'N/A'} kg</span>
+          </div>
+          
+          {/* Types */}
+          <div className="flex items-center py-4 justify-between">
+            <span className="text-lg font-semibold text-gray-700 w-24">Types</span>
+            <div className="flex flex-wrap gap-2">
+              {pokemon.types?.map(({ type }) => (
+                <span
+                  key={type.name}
+                  className="px-3 py-1 text-sm rounded-full font-medium capitalize"
+                >
+                  {type.name}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

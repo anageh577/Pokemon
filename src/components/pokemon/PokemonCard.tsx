@@ -76,9 +76,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
           {capitalizedName}
         </h3>
         
-        <p className="text-sm text-gray-600 mb-3">
-          #{pokemon.id.toString().padStart(3, '0')}
-        </p>
+  
         
         {pokemon.types && (
           <div className="flex flex-wrap justify-center gap-1">
