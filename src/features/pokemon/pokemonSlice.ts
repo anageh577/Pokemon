@@ -1,10 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Pokemon, PokemonDetail } from '../../types/pokemon';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { Pokemon, PokemonDetailResponse } from '../../types/pokemon';
 
 interface PokemonState {
   selectedPokemon: Pokemon | null;
   favorites: number[];
-  cache: Record<number, PokemonDetail>;
+  cache: Record<number, PokemonDetailResponse>;
   currentPage: number;
   itemsPerPage: number;
 }
@@ -32,7 +33,7 @@ export const pokemonSlice = createSlice({
     removeFromFavorites: (state, action: PayloadAction<number>) => {
       state.favorites = state.favorites.filter(id => id !== action.payload);
     },
-    cachePokemonDetail: (state, action: PayloadAction<{ id: number; detail: PokemonDetail }>) => {
+    cachePokemonDetail: (state, action: PayloadAction<{ id: number; detail: PokemonDetailResponse }>) => {
       state.cache[action.payload.id] = action.payload.detail;
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {

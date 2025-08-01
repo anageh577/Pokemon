@@ -92,15 +92,11 @@ const PokemonListPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <div className="h-[50px] bg-[#2e7df6] flex items-center px-8">
+        <p className="text-white text-2xl font-bold">PokeReact</p>
+      </div>
       <div className="max-w-[500px] mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Pokemon Explorer
-          </h1>
-          <p className="text-gray-600">
-            Discover and explore the world of Pokemon
-          </p>
-        </div>
+      
 
         <div className="mb-6">
           <SearchBar

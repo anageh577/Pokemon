@@ -9,10 +9,11 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({
   error = null,
   onBack,
 }) => {
+
+  const capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
   // Update page title when Pokemon data is available
   useEffect(() => {
     if (pokemon && pokemon.name) {
-      const capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
       document.title = `${capitalizedName}`;
     } else {
       document.title = 'Pokémon App';
@@ -36,56 +37,30 @@ const PokemonDetail: React.FC<PokemonDetailProps> = ({
     );
   }
 
-  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
 
-  const capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-
-  const typeColors: Record<string, string> = {
-    normal: 'bg-gray-400',
-    fire: 'bg-red-500',
-    water: 'bg-blue-500',
-    electric: 'bg-yellow-400',
-    grass: 'bg-green-500',
-    ice: 'bg-blue-300',
-    fighting: 'bg-red-700',
-    poison: 'bg-purple-500',
-    ground: 'bg-yellow-600',
-    flying: 'bg-indigo-400',
-    psychic: 'bg-pink-500',
-    bug: 'bg-green-400',
-    rock: 'bg-yellow-800',
-    ghost: 'bg-purple-700',
-    dragon: 'bg-indigo-700',
-    dark: 'bg-gray-800',
-    steel: 'bg-gray-500',
-    fairy: 'bg-pink-300',
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100">
     {/* Sticky Header */}
     <div className="sticky top-0 z-20 bg-white/70 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-      <div className="mx-auto px-4 py-4 flex items-center">
-        <button
-          onClick={onBack}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 hover:text-gray-900 transition-all duration-200"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Back to Pokémon List
-        </button>
+    <div className="h-[50px] bg-[#2e7df6] flex items-center px-4">
+    <svg
+  onClick={onBack}
+  className="w-5 h-5 cursor-pointer mr-4"
+  fill="none"
+  stroke="white"
+  viewBox="0 0 24 24"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    d="M15 19l-7-7 7-7"
+  />
+</svg>
+        <p className="text-white text-2xl font-bold">{capitalizedName}</p>
       </div>
+
     </div>
 
     {/* Content */}
